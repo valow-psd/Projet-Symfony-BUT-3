@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Event Detail{% endblock %}
+
+{% block body %}
+    <h1>{{ event.title }}</h1>
+    <p>{{ event.description }}</p>
+    <p>Date: {{ event.date|date('Y-m-d H:i') }}</p>
+    <p>Max Participants: {{ event.maxParticipants }}</p>
+    <p>Public: {{ event.isPublic ? 'Yes' : 'No' }}</p>
+
+    {# Add registration button/link here #}
+    <a href="#" class="btn btn-primary">Register</a>
+{% endblock %}
