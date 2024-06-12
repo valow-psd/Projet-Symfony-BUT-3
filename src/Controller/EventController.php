@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\Registration;
 use App\Form\EventType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class EventController extends AbstractController
 {
@@ -57,11 +59,68 @@ class EventController extends AbstractController
         ]);
     }
 
-    #[Route('/event/{id}', name: 'event_detail')]
     #[IsGranted('view', subject: 'event')]
-    public function detail(Event $event): Response
+    #[Route('/event/{id}', name: 'event_detail', methods: ['GET'])]
+    public function detail(Event $event, Security $security, EntityManagerInterface $entityManager): Response
     {
+        $user = $security->getUser();
+        $isRegistered = false;
+
+        if ($user) {
+            $registration = $entityManager->getRepository(Registration::class)->findOneBy([
+                'user' => $user,
+                'event' => $event,
+            ]);
+
+            $isRegistered = $registration !== null;
+        }
+
+        $isFull = $event->getRegistrations()->count() >= $event->getMaxParticipants();
+
         return $this->render('event/detail.html.twig', [
+            'event' => $event,
+            'isRegistered' => $isRegistered,
+            'isFull' => $isFull,
+        ]);
+    }
+
+    #[Route('/event/edit/{id}', name: 'event_edit')]
+    #[IsGranted('edit', 'event')]
+    public function edit(Event $event, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('edit', $event);
+
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            $this->addFlash('success', 'Event updated successfully.');
+
+            return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
+        }
+
+        return $this->render('event/edit.html.twig', [
+            'event' => $event,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/event/delete/{id}', name: 'event_delete')]
+    #[IsGranted('delete', 'event')]
+    public function delete(Event $event, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('delete', $event);
+
+        if ($request->isMethod('POST')) {
+            $entityManager->remove($event);
+            $entityManager->flush();
+            $this->addFlash('success', 'Event deleted successfully.');
+
+            return $this->redirectToRoute('event_index');
+        }
+
+        return $this->render('event/delete.html.twig', [
             'event' => $event,
         ]);
     }

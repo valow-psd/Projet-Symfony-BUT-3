@@ -1,14 +1,44 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Event Detail{% endblock %}
 
 {% block body %}
-    <h1>{{ event.title }}</h1>
-    <p>{{ event.description }}</p>
-    <p>Date: {{ event.date|date('Y-m-d H:i') }}</p>
-    <p>Max Participants: {{ event.maxParticipants }}</p>
-    <p>Public: {{ event.isPublic ? 'Yes' : 'No' }}</p>
+    <div class="max-w-4xl mx-auto bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 p-6">
+        <h1 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">{{ event.title }}</h1>
+        <p class="mb-4 text-gray-700 dark:text-gray-400">{{ event.description }}</p>
+        <div class="mb-4">
+            <p class="text-gray-700 dark:text-gray-400"><strong>Date:</strong> {{ event.date|date('Y-m-d H:i') }}</p>
+            <p class="text-gray-700 dark:text-gray-400"><strong>Max Participants:</strong> {{ event.maxParticipants }}</p>
+            <p class="text-gray-700 dark:text-gray-400"><strong>Public:</strong> {{ event.isPublic ? 'Yes' : 'No' }}</p>
+        </div>
+        {% if isFull %}
+            <button class="text-white bg-gray-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-gray-600" disabled>
+                Event Full
+                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                </svg>
+            </button>
+        {% elseif isRegistered %}
+            <form action="{{ path('event_unregister', {'id': event.id}) }}" method="post">
+                <button type="submit" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                    Unregister
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </button>
+            </form>
+        {% else %}
+            <form action="{{ path('event_register', {'id': event.id}) }}" method="post">
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Register
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </button>
+            </form>
+        {% endif %}
 
-    {# Add registration button/link here #}
-    <a href="#" class="btn btn-primary">Register</a>
+    </div>
 {% endblock %}
+
