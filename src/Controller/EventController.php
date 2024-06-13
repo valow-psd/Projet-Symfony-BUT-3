@@ -16,18 +16,20 @@ use Symfony\Component\Security\Core\Security;
 class EventController extends AbstractController
 {
     #[Route('/event/new', name: 'event_new')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $security->getUser();
+            $event->setCreatedBy($user);
+
             $entityManager->persist($event);
             $entityManager->flush();
 
-            return $this->redirectToRoute('event_success');
+            return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
         }
 
         return $this->render('event/new.html.twig', [
@@ -88,20 +90,16 @@ class EventController extends AbstractController
     #[IsGranted('edit', 'event')]
     public function edit(Event $event, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $this->denyAccessUnlessGranted('edit', $event);
-
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-            $this->addFlash('success', 'Event updated successfully.');
 
             return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
         }
 
         return $this->render('event/edit.html.twig', [
-            'event' => $event,
             'form' => $form->createView(),
         ]);
     }
@@ -122,6 +120,24 @@ class EventController extends AbstractController
 
         return $this->render('event/delete.html.twig', [
             'event' => $event,
+        ]);
+    }
+
+    #[Route('/events/subscribed', name: 'event_subscribed')]
+    public function subscribed(EntityManagerInterface $entityManager, Security $security): Response
+    {
+        $user = $security->getUser();
+
+        if (!$user) {
+            $this->addFlash('error', 'You must be logged in to view your subscribed events.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        $registrations = $entityManager->getRepository(Registration::class)->findBy(['user' => $user]);
+        $events = array_map(fn($registration) => $registration->getEvent(), $registrations);
+
+        return $this->render('event/subscribed.html.twig', [
+            'events' => $events,
         ]);
     }
 }
