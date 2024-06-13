@@ -1,4 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Spicy+Rice&display=swap');
+
+
+body{
+    background-color: #ffffee;
+    font-family: 'Space Grotesk', sans-serif;
+    color: #382b45;
+}
+
+.logo-text {
+    font-family: 'Spicy Rice', serif;
+    color: #382b45;
+}
+
+.logo-text-light {
+    font-family: 'Spicy Rice', serif;
+    color: #ffffee;
+}
+
 .current {
     color: rgb(29 78 216);
     font-weight: bold;
+}
+
+.button-login{
+    border-radius: 40px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #382b45;
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Ajout de la transition */
+}
+
+.button-login:hover{
+    border-radius: 40px;
+    background-color: #382b45;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #382b45;
+}
+
+.button-register{
+    border-radius: 40px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ffffee;
+    color: #ffffee;
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Ajout de la transition */
+}
+
+.button-register:hover{
+    border-radius: 40px;
+    background-color: #ffffee;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ffffee;
+    color: #382b45;
+}
+
+.button-section-full{
+    border-radius: 15px;
+    border-style: solid;
+    background-color: #382b45;
+    border-width: 1px;
+    border-color: #382b45;
+    color: #ffffee;
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Ajout de la transition */
+}
+
+.button-section-full:hover{
+    border-radius: 15px;
+    border-style: solid;
+    background-color: transparent;
+    border-width: 1px;
+    color: #382b45;
+    border-color: #382b45;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+}
+.marquee {
+    display: flex;
+    width: 200%;
+    overflow: hidden;
+    white-space: nowrap;
+    /*animation: marquee 20s linear infinite;*/
+}
+
+.marquee-item {
+    flex: none;
+    margin-right: 6rem; /* Increased spacing */
+    opacity: 0.7; /* Reduced opacity */
+    transition: opacity 0.3s;
+}
+.marquee-item:hover {
+    opacity: 1; /* Full opacity on hover */
+}
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out, border 0.5s ease-out;
+}
+.expanded {
+    padding-top: 1rem; /* Optional: Adds padding smoothly when expanded */
+    padding-bottom: 1rem; /* Optional: Adds padding smoothly when expanded */
+}
+
+.footer-bg {
+    background-color: #382b45;
+    color: #ffffee;
 }

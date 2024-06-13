@@ -4,9 +4,106 @@
 
 {% block body %}
     <div class="container mx-auto p-4">
-        <h1 class="text-3xl font-bold underline">
-            Hello Tailwind CSS with Flowbite!
-        </h1>
-        <button class="btn btn-primary">Button from Flowbite</button>
+        <div class="relative z-10 flex flex-col items-center text-center">
+            <span class="bg-yellow-300 text-xs font-bold py-1 px-3 rounded-full text-gray-900">FREEEAAKKYY</span>
+            <h1 class="mt-6 text-7xl font-bold text-gray-900 dark:text-white">Never miss any of <br> <span
+                        class="text-yellow-400">your freakiest events</span></h1>
+            <p class="mt-4 text-lg text-gray-700 dark:text-gray-300">Get Freaky and keep track of all upcoming key
+                events and countdown to life's milestones!</p>
+            <a href="#" class="mt-8 inline-block button-section-full font-medium rounded-lg px-6 py-3">Check the latest
+                events</a>
+            <div class="flex items-center space-x-2 mt-6">
+                <div class="flex -space-x-2">
+                    <img class="w-10 h-10 rounded-full border-2 border-white" src="https://img.freepik.com/psd-gratuit/illustration-3d-avatar-profil-humain_23-2150671142.jpg"
+                         alt="Avatar 1">
+                    <img class="w-10 h-10 rounded-full border-2 border-white" src="https://img.freepik.com/freie-psd/3d-darstellung-eines-menschlichen-avatars-oder-profils_23-2150671122.jpg"
+                         alt="Avatar 2">
+                    <img class="w-10 h-10 rounded-full border-2 border-white" src="https://img.freepik.com/freie-psd/3d-darstellung-eines-menschlichen-avatars-oder-profils_23-2150671134.jpg"
+                         alt="Avatar 3">
+                    <img class="w-10 h-10 rounded-full border-2 border-white" src="https://img.freepik.com/psd-gratuit/illustration-3d-avatar-profil-humain_23-2150671136.jpg"
+                         alt="Avatar 4">
+                </div>
+                <span class="text-[#382b45] text-md">loved by 20+ organisations.</span>
+            </div>
+        </div>
+
+        <div class="py-10 overflow-hidden relative">
+            <div class="marquee">
+                <img class="marquee-item h-12" src="https://upload.wikimedia.org/wikipedia/commons/0/0d/UFC_logo.svg" alt="Brand 1">
+                <img class="marquee-item h-12" src="https://cdn.freebiesupply.com/images/large/2x/mls-logo-black-and-white.png" alt="Brand 2">
+                <img class="marquee-item h-12" src="https://cdn.freebiesupply.com/images/large/2x/cia-logo-black-and-white.png" alt="Brand 3">
+                <img class="marquee-item h-12" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Glock_logo.svg/2531px-Glock_logo.svg.png" alt="Brand 4">
+                <img class="marquee-item h-12" src="https://logodownload.org/wp-content/uploads/2017/10/volvo-logo-6.png" alt="Brand 5">
+                <img class="marquee-item h-12" src="https://pngfre.com/wp-content/uploads/Wwe-3.png" alt="Brand 6">
+                <img class="marquee-item h-12" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Call_of_Duty_logo.svg/2560px-Call_of_Duty_logo.svg.png" alt="Brand 7">
+                <img class="marquee-item h-12" src="https://cdn.freebiesupply.com/logos/large/2x/pharmacie-logo-png-transparent.png" alt="Brand 8">
+            </div>
+        </div>
     </div>
+    <section class="py-16">
+        <div class="max-w-screen-xl mx-auto px-4 md:px-8">
+            <!-- Badge and Title -->
+            <div class="text-center mb-8">
+                <span class="bg-yellow-300 text-xs font-bold py-1 px-3 rounded-full text-gray-900">WHERE TO START ?</span>
+                <h2 class="mt-4 text-5xl font-bold text-gray-900">Easy way to get started</h2>
+            </div>
+            <!-- Image and Text -->
+            <div class="flex flex-col md:flex-row items-center mt-5">
+                <div class="md:w-1/2 md:pr-8">
+                    <img src="{{ asset('images/illus-events.png') }}" alt="Feature Image" class="w-full h-auto rounded-lg">
+                </div>
+                <div class="md:w-1/2 md:pl-8 mt-8 md:mt-0">
+                    <h3 class="text-6xl font-bold text-gray-900 mb-4">Find events that match your passions</h3>
+                    <p class="text-gray-700">We are sponsors of all the events. Held all over the world to build communities, relationships, togertherness to display artworks with fellow passionates. </br> There are more than 100+ events that match your passions, make sure to check correctly !</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="max-w-screen-xl mx-auto py-10 px-4">
+        <!-- Badge and Title -->
+        <div class="text-center mb-8">
+            <span class="bg-yellow-300 text-xs font-bold py-1 px-3 rounded-full text-gray-900 text-uppercase">Events we sponsor</span>
+            <h2 class="mt-4 text-5xl font-bold text-gray-900">Upcoming Event</h2>
+            <p class="mt-2 text-gray-600">Upcoming events schedule not to be missed!</p>
+        </div>
+
+        <!-- Event List -->
+        <div class="space-y-4">
+            {% for event in events %}
+                <div class="bg-white shadow rounded-lg p-4 cursor-pointer" onclick="toggleCollapsibleContent(this)">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/50" alt="{{ event.title }}" class="w-12 h-12 mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">{{ event.title }}</h3>
+                                <p class="text-gray-500">{{ event.description }}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-3xl font-bold text-red-500">{{ event.date|date('d') }}</div>
+                            <div class="text-gray-500">{{ event.date|date('F') }}</div>
+                            <div class="text-gray-400 text-sm">{{ event.date|date('h:i A') }}</div>
+                        </div>
+                    </div>
+                    <div class="collapsible-content mt-4 text-gray-600">
+                        <p>{{ event.description }}</p>
+                        <div class="mt-4">
+                                <form action="{{ path('event_detail', {'id': event.id}) }}" method="get">
+                                    <button type="submit" class="text-black bg-yellow-300 hover:bg-yellow-300 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                        See in details
+                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="{{ path('event_list') }}" class="button-section-full bg-blue-500 text-white rounded-full px-4 py-2 hover:bg-blue-600 focus:outline-none">All Events</a>
+        </div>
+    </section>
 {% endblock %}
