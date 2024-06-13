@@ -115,7 +115,7 @@ class EventController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', 'Event deleted successfully.');
 
-            return $this->redirectToRoute('event_index');
+            return $this->redirectToRoute('event_list');
         }
 
         return $this->render('event/delete.html.twig', [

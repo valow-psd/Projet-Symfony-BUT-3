@@ -38,6 +38,22 @@ body{
     border-color: #382b45;
 }
 
+.button-logout{
+    border-radius: 40px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: red;
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Ajout de la transition */
+}
+
+.button-logout:hover{
+    border-radius: 40px;
+    background-color: red;
+    border-style: solid;
+    border-width: 1px;
+    border-color: red;
+}
+
 .button-register{
     border-radius: 40px;
     border-style: solid;
