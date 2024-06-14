@@ -54,16 +54,13 @@
                 </ul>
             </div>
 
-            <div class="flex items-center md:ml-auto">
+            <div class="flex items-center md:mx-auto justify-center">
                 <ul class="font-medium flex flex-col md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 bg-[#ffffee] dark:bg-gray-900">
                     {% if app.user %}
                         <li class="flex items-center justify-center">
                             <a href="{{ path('app_profile') }}"
                                class="block text-[#382b45] button-login hover:text-white font-medium text-sm px-5 py-2.5 me-2 mb-2">My
                                 Profile</a>
-                        </li>
-                        <li class="flex items-center justify-center">
-                            <a href="{{ path('app_logout') }}" class="block text-red-400 button-logout hover:text-white font-medium text-sm px-5 py-2.5 me-2 mb-2">Logout</a>
                         </li>
                     {% else %}
                         <li class="flex items-center justify-center">

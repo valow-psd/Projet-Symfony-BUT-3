@@ -4,24 +4,42 @@
 {% block title %}Subscribed Events{% endblock %}
 
 {% block body %}
-    <section class="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
-        <div class="w-full max-w-4xl bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
+    <!-- Badge and Title -->
+    <div class="text-center mb-8">
+        <span class="bg-yellow-300 text-xs font-bold py-1 px-3 rounded-full text-gray-900 text-uppercase">MY SUBSCRIPTIONS</span>
+        <h2 class="mt-4 text-5xl font-bold text-gray-900">Subscribed Events</h2>
+        <p class="mt-2 text-gray-600">Here are the events you have subscribed to.</p>
+    </div>
+
+    <section class="flex items-center justify-center">
+        <div class="w-full max-w-7xl dark:border dark:bg-gray-800 dark:border-gray-700">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                    Subscribed Events
-                </h1>
                 {% if events is not empty %}
-                    <ul class="space-y-4">
+                    <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center">
                         {% for event in events %}
-                            <li class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                    <a href="{{ path('event_detail', {'id': event.id}) }}">{{ event.title }}</a>
-                                </h2>
-                                <p class="text-gray-700 dark:text-gray-400">{{ event.description }}</p>
-                                <p class="text-gray-500 dark:text-gray-500">{{ event.date|date('Y-m-d H:i') }}</p>
-                            </li>
+                            <div class="w-full max-w-sm mx-auto bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+                                <div class="p-5">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h3 class="text-xl font-bold text-gray-900">{{ event.title }}</h3>
+                                            <p class="text-gray-500">{{ event.description }}</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-3xl font-bold text-red-500">{{ event.date|date('d') }}</div>
+                                            <div class="text-gray-500">{{ event.date|date('F') }}</div>
+                                            <div class="text-gray-400 text-sm">{{ event.date|date('h:i A') }}</div>
+                                        </div>
+                                    </div>
+                                    <a href="{{ path('event_detail', {'id': event.id}) }}" class="text-black bg-yellow-300 hover:bg-yellow-300 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                        Read more
+                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
                         {% endfor %}
-                    </ul>
+                    </div>
                 {% else %}
                     <p class="text-gray-700 dark:text-gray-400">You are not subscribed to any events.</p>
                 {% endif %}
