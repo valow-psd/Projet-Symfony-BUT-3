@@ -6,6 +6,7 @@ use App\Entity\Registration;
 use App\Entity\User;
 use App\Entity\Event;
 use App\Service\EmailService;
+use App\Service\EventRegistrationService;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,9 +23,10 @@ class RegistrationController extends AbstractController
 
     private $emailService;
 
-    public function __construct(EmailService $emailService)
+    public function __construct(EmailService $emailService, EventRegistrationService $eventRegistrationService)
     {
         $this->emailService = $emailService;
+        $this->eventRegistrationService = $eventRegistrationService;
     }
 
     #[Route('/registration', name: 'app_registration')]
@@ -82,6 +84,17 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
         }
 
+        if ($this->eventRegistrationService->isEventFull($event)) {
+            $this->addFlash('error', 'This event is already full.');
+            return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
+        }
+
+        if ($this->eventRegistrationService->register($event)) {
+            $this->addFlash('success', 'You have successfully registered for the event.');
+        } else {
+            $this->addFlash('error', 'Unable to register for the event.');
+        }
+
         $registration = new Registration();
         $registration->setUser($user);
         $registration->setEvent($event);
@@ -109,6 +122,12 @@ class RegistrationController extends AbstractController
         if (!$user) {
             $this->addFlash('error', 'You must be logged in to unregister from an event.');
             return $this->redirectToRoute('app_login');
+        }
+
+        if ($this->eventRegistrationService->unregister($event)) {
+            $this->addFlash('success', 'You have successfully unregistered from the event.');
+        } else {
+            $this->addFlash('error', 'Unable to unregister from the event.');
         }
 
         $registration = $entityManager->getRepository(Registration::class)->findOneBy([
