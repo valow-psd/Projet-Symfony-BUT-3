@@ -1,9 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Spicy+Rice&display=swap');
 
+@font-face {
+    font-family: 'Nohemi';
+    src: url('/fonts/Nohemi-Regular.woff2') format('woff2'),
+    url('/fonts/Nohemi-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nohemi';
+    src: url('/fonts/Nohemi-Bold.woff2') format('woff2'),
+    url('/fonts/Nohemi-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nohemi';
+    src: url('/fonts/Nohemi-Italic.woff2') format('woff2'),
+    url('/fonts/Nohemi-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
 
 body{
     background-color: #ffffee;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Nohemi', sans-serif;
     color: #382b45;
 }
 
