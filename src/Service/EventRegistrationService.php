@@ -44,10 +44,12 @@ class EventRegistrationService
         $registration->setCreatedAt(new \DateTime());
 
         $this->entityManager->persist($registration);
+        
+        // Flush to ensure the registration is persisted before modifying the event
+        $this->entityManager->flush();
 
-        // Décrémenter le nombre de participants maximum
+        // Décrémenter le nombre de participants maximum après la persistance de l'inscription
         $event->setMaxParticipants($event->getMaxParticipants() - 1);
-
         $this->entityManager->flush();
 
         $this->emailService->sendEmail(
@@ -77,10 +79,12 @@ class EventRegistrationService
         }
 
         $this->entityManager->remove($registration);
+        
+        // Flush to ensure the registration is removed before modifying the event
+        $this->entityManager->flush();
 
-        // Incrémenter le nombre de participants maximum
+        // Incrémenter le nombre de participants maximum après la suppression de l'inscription
         $event->setMaxParticipants($event->getMaxParticipants() + 1);
-
         $this->entityManager->flush();
 
         $this->emailService->sendEmail(
