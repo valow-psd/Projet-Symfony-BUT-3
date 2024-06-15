@@ -1,0 +1,19 @@
+{# templates/event/register.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Register for {{ event.title }}{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen flex flex-col items-center justify-center bg-gray-100 py-6 sm:py-12">
+        <div class="max-w-md w-full bg-white shadow-lg rounded-lg p-8">
+            <h1 class="text-2xl font-bold text-center text-gray-900 mb-4">Register for {{ event.title }}</h1>
+
+            <form method="post" action="{{ path('event_register_post', {'id': event.id}) }}" class="space-y-4">
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Register
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

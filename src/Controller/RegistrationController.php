@@ -21,12 +21,15 @@ use App\Security\SecurityControllerAuthenticator;
 class RegistrationController extends AbstractController
 {
 
+    private $stripePublicKey;
+    private $eventRegistrationService;
     private $emailService;
 
-    public function __construct(EmailService $emailService, EventRegistrationService $eventRegistrationService)
+    public function __construct(string $stripePublicKey, EventRegistrationService $eventRegistrationService, EmailService $emailService)
     {
-        $this->emailService = $emailService;
+        $this->stripePublicKey = $stripePublicKey;
         $this->eventRegistrationService = $eventRegistrationService;
+        $this->emailService = $emailService;
     }
 
     #[Route('/registration', name: 'app_registration')]
@@ -70,7 +73,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/event/register/{id}', name: 'event_register', methods: ['POST'])]
-    public function registerEvent(Event $event, EntityManagerInterface $entityManager, Security $security): Response
+    public function registerEvent(Event $event, Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
         $user = $security->getUser();
 
@@ -79,35 +82,18 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        if ($event->getRegistrations()->count() >= $event->getMaxParticipants()) {
+        if ($event->getRegistrations()->count() >= $event->getMaxParticipants() || $this->eventRegistrationService->isEventFull($event)) {
             $this->addFlash('error', 'This event is already full.');
             return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
         }
 
-        if ($this->eventRegistrationService->isEventFull($event)) {
-            $this->addFlash('error', 'This event is already full.');
-            return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
+        if ($event->getIsPaid() && !$this->eventRegistrationService->hasPaid($user, $event)) {
+            // Redirect to payment if the event is paid and the user has not paid yet
+            return $this->redirectToRoute('event_pay', ['id' => $event->getId()]);
         }
 
-        if ($this->eventRegistrationService->register($event)) {
-            $this->addFlash('success', 'You have successfully registered for the event.');
-        } else {
-            $this->addFlash('error', 'Unable to register for the event.');
-        }
-
-        $registration = new Registration();
-        $registration->setUser($user);
-        $registration->setEvent($event);
-        $registration->setCreatedAt(new \DateTime());
-
-        $entityManager->persist($registration);
-        $entityManager->flush();
-
-        $this->emailService->sendEmail(
-            $user->getEmail(),
-            'Event Registration Confirmation',
-            'You have successfully registered for the event.'
-        );
+        // Proceed with registration if the event is free or the user has already paid
+        $this->eventRegistrationService->register($event);
 
         $this->addFlash('success', 'You have successfully registered for the event.');
 

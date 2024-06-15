@@ -1,0 +1,100 @@
+{# templates/event/pay.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Pay for Event{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen flex items-center justify-center py-12">
+        <div class="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
+            <h1 class="text-3xl font-bold mb-4 text-center">Pay for {{ event.title }}</h1>
+            <p class="mb-4 text-center">Amount: {{ event.price }} USD</p>
+
+            <div id="payment-form-container">
+                <form id="payment-form" class="space-y-4">
+                    <div id="card-element" class="p-3 border rounded mb-4"></div>
+                    <button id="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                        <i class="fas fa-lock mr-2"></i>Pay
+                    </button>
+                </form>
+            </div>
+
+            <div id="payment-success" class="hidden text-center text-green-500">
+                <p class="text-2xl font-bold mb-4">Payment Successful!</p>
+                <div class="loader"></div>
+            </div>
+
+            <div id="payment-error" class="hidden text-center text-red-500">
+                <p class="text-2xl font-bold mb-4">Payment Failed!</p>
+                <p>Please try again.</p>
+                <button id="try-again" class="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 mt-4">
+                    Try Again
+                </button>
+            </div>
+
+            <form id="confirmation-form" method="post" action="{{ path('event_confirm', {'id': event.id}) }}" class="hidden">
+                <input type="hidden" name="payment_success" value="true">
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        const stripe = Stripe('{{ publicKey }}');
+        const elements = stripe.elements();
+        const cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+        const form = document.getElementById('payment-form');
+        const confirmationForm = document.getElementById('confirmation-form');
+        const paymentFormContainer = document.getElementById('payment-form-container');
+        const paymentSuccess = document.getElementById('payment-success');
+        const paymentError = document.getElementById('payment-error');
+        const tryAgainButton = document.getElementById('try-again');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const {paymentIntent, error} = await stripe.confirmCardPayment('{{ clientSecret }}', {
+                payment_method: {
+                    card: cardElement,
+                }
+            });
+
+            if (error) {
+                // Display error message
+                paymentFormContainer.classList.add('hidden');
+                paymentError.classList.remove('hidden');
+            } else {
+                // Display success animation and submit confirmation form
+                paymentFormContainer.classList.add('hidden');
+                paymentSuccess.classList.remove('hidden');
+                setTimeout(() => {
+                    confirmationForm.submit();
+                }, 2000); // Adjust the timeout duration as needed
+            }
+        });
+
+        tryAgainButton.addEventListener('click', () => {
+            paymentError.classList.add('hidden');
+            paymentFormContainer.classList.remove('hidden');
+        });
+    </script>
+{% endblock %}

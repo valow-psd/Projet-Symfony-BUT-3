@@ -48,4 +48,11 @@ class EmailService
             throw new \Exception('Email could not be sent: ' . $response->getReasonPhrase());
         }
     }
+
+    public function sendPaymentConfirmationEmail(string $to, string $eventTitle): void
+    {
+        $subject = 'Payment Confirmation';
+        $content = sprintf('You have successfully paid for the event: %s', $eventTitle);
+        $this->sendEmail($to, $subject, $content);
+    }
 }

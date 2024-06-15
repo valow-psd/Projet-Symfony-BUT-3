@@ -1,5 +1,7 @@
 <?php
 
+// src/Service/EventRegistrationService.php
+
 namespace App\Service;
 
 use App\Entity\Event;
@@ -42,10 +44,10 @@ class EventRegistrationService
         $registration->setUser($user);
         $registration->setEvent($event);
         $registration->setCreatedAt(new \DateTime());
+        $registration->setAmount($event->getPrice());
+        $registration->setUniqueCode($this->generateUniqueCode());
 
         $this->entityManager->persist($registration);
-        
-        // Flush to ensure the registration is persisted before modifying the event
         $this->entityManager->flush();
 
         // Décrémenter le nombre de participants maximum après la persistance de l'inscription
@@ -59,6 +61,11 @@ class EventRegistrationService
         );
 
         return true;
+    }
+
+    private function generateUniqueCode(): string
+    {
+        return bin2hex(random_bytes(8));
     }
 
     public function unregister(Event $event): bool
@@ -79,8 +86,6 @@ class EventRegistrationService
         }
 
         $this->entityManager->remove($registration);
-        
-        // Flush to ensure the registration is removed before modifying the event
         $this->entityManager->flush();
 
         // Incrémenter le nombre de participants maximum après la suppression de l'inscription
@@ -99,5 +104,30 @@ class EventRegistrationService
     public function isEventFull(Event $event): bool
     {
         return $event->getMaxParticipants() <= 0;
+    }
+
+    public function hasPaid($user, Event $event): bool
+    {
+        // Assuming that if the user is registered, they have paid
+        // In a real scenario, you'd want to check a 'paid' status on the registration
+        $registration = $this->entityManager->getRepository(Registration::class)->findOneBy([
+            'user' => $user,
+            'event' => $event,
+        ]);
+
+        return $registration !== null;
+    }
+
+    public function markAsPaid($user, Event $event): void
+    {
+        $registration = new Registration();
+        $registration->setUser($user);
+        $registration->setEvent($event);
+        $registration->setCreatedAt(new \DateTime());
+        $registration->setAmount($event->getPrice());
+        $registration->setUniqueCode($this->generateUniqueCode());
+
+        $this->entityManager->persist($registration);
+        $this->entityManager->flush();
     }
 }

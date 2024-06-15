@@ -45,6 +45,12 @@ class Event
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: Registration::class, orphanRemoval: true)]
     private $registrations;
 
+    #[ORM\Column(type: 'boolean')]
+    private $isPaid;
+
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    private $price;
+
     public function __construct()
     {
         $this->registrations = new ArrayCollection();
@@ -153,6 +159,30 @@ class Event
                 $registration->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsPaid(): ?bool
+    {
+        return $this->isPaid;
+    }
+
+    public function setIsPaid(bool $isPaid): self
+    {
+        $this->isPaid = $isPaid;
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?string $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

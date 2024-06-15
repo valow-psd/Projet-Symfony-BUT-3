@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\Registration;
 use App\Form\EventType;
+use App\Service\EmailService;
+use App\Service\EventRegistrationService;
+use App\Service\StripeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +18,18 @@ use Symfony\Component\Security\Core\Security;
 
 class EventController extends AbstractController
 {
+
+    private $stripePublicKey;
+    private $eventRegistrationService;
+    private $emailService;
+
+    public function __construct(string $stripePublicKey, EventRegistrationService $eventRegistrationService, EmailService $emailService)
+    {
+        $this->stripePublicKey = $stripePublicKey;
+        $this->eventRegistrationService = $eventRegistrationService;
+        $this->emailService = $emailService;
+    }
+
     #[Route('/event/new', name: 'event_new')]
     public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
@@ -134,10 +149,42 @@ class EventController extends AbstractController
         }
 
         $registrations = $entityManager->getRepository(Registration::class)->findBy(['user' => $user]);
-        $events = array_map(fn($registration) => $registration->getEvent(), $registrations);
 
         return $this->render('event/subscribed.html.twig', [
-            'events' => $events,
+            'registrations' => $registrations,
         ]);
+    }
+
+    #[Route('/event/pay/{id}', name: 'event_pay')]
+    public function pay(Event $event, StripeService $stripeService): Response
+    {
+        if (!$event->getIsPaid() || $event->getPrice() <= 0) {
+            throw $this->createNotFoundException('This event is not a paid event.');
+        }
+
+        $paymentIntent = $stripeService->createPaymentIntent($event->getPrice(), 'usd');
+
+        return $this->render('event/pay.html.twig', [
+            'event' => $event,
+            'clientSecret' => $paymentIntent->client_secret,
+            'publicKey' => $this->stripePublicKey,
+        ]);
+    }
+
+    #[Route('/event/confirm/{id}', name: 'event_confirm', methods: ['POST'])]
+    public function confirmPayment(Event $event, Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    {
+        $user = $security->getUser();
+
+        if (!$user) {
+            $this->addFlash('error', 'You must be logged in to register for an event.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        $this->eventRegistrationService->markAsPaid($user, $event);
+
+        $this->addFlash('success', 'Your payment was successful and you have been registered for the event.');
+
+        return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
     }
 }

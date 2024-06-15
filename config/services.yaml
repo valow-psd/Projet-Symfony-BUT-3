@@ -8,6 +8,8 @@ parameters:
     mailjet_api_secret: '%env(MAILJET_API_SECRET)%'
     mailjet_sender_email: '%env(MAILJET_SENDER_EMAIL)%'
     mailjet_sender_name: '%env(MAILJET_SENDER_NAME)%'
+    stripe_secret_key: '%env(STRIPE_SECRET_KEY)%'
+    stripe_public_key: '%env(STRIPE_PUBLIC_KEY)%'
 
 services:
     # default configuration for services in *this* file
@@ -26,5 +28,14 @@ services:
     App\Security\Voter\EventVoter:
         tags:
             - { name: security.voter }
+    App\Service\StripeService:
+        arguments:
+            $stripeSecretKey: '%stripe_secret_key%'
+    App\Controller\EventController:
+        arguments:
+            $stripePublicKey: '%stripe_public_key%'
+    App\Controller\RegistrationController:
+        arguments:
+            $stripePublicKey: '%stripe_public_key%'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
