@@ -147,7 +147,7 @@ class DataFixtures extends Fixture
                 'price' => 79.00
             ],
             [
-                'title' => 'Francopholies',
+                'title' => 'Francofolies',
                 'description' => 'Le 14 juillet 2024, Les Francofolies fêteront la clôture de leur 40ème édition. Elles vous concocteront un feu d’artifice de surprises plus étonnants les unes que les autres. Car 40 éditions ça se fête ! Au programme : Hervé, figure majeure de la nouvelle scène pop française, Zaho de Sagazan, la triomphante des Victoires de La Musique 2024, Sofiane Pamart, le pianiste virtuose pas si classique, Phoenix, le meilleur groupe français dans le monde, & Jean-Michel Jarre, le père fondateur de la musique électronique ! Venez souffler la quarantaine bougie avec nous, promis...on vous réserve de belles surprises !',
                 'date' => new \DateTime('+35 days'),
                 'maxParticipants' => 12000,
@@ -166,7 +166,7 @@ class DataFixtures extends Fixture
             ],
             [
                 'title' => 'Le Mans 24 Hours',
-                'description' => 'The most historical race in the world made its comeback for the 145th Edition !',
+                'description' => 'The most historical race in the world made its comeback for the 92nd Edition !',
                 'date' => new \DateTime('+50 days'),
                 'maxParticipants' => 45000,
                 'isPublic' => true,

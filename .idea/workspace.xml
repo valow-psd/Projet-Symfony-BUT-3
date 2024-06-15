@@ -2,28 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01bd1d6f-f670-421e-9fda-825ac6272af2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Service/StripeService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/event/pay.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/event/register.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20240612091232.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/EventController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EventController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpunit.xml.dist" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml.dist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DataFixtures/DataFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/DataFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Event.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Event.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Registration.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Registration.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/EventType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/EventType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/EmailService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/EmailService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/EventRegistrationService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/EventRegistrationService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/event/detail.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/event/detail.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/event/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/event/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/event/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/event/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/event/subscribed.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/event/subscribed.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/EventControllerTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/ProfileControllerTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/RegistrationControllerTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/SecurityTestController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/EventTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/EventTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/RegistrationTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/RegistrationTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/UserTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/UserTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +84,7 @@
       <workItem from="1718277731205" duration="17375000" />
       <workItem from="1718352312588" duration="5407000" />
       <workItem from="1718375666145" duration="1449000" />
-      <workItem from="1718437028791" duration="9556000" />
+      <workItem from="1718437028791" duration="12909000" />
     </task>
     <servers />
   </component>
