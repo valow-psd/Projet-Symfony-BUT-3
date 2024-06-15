@@ -2,53 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01bd1d6f-f670-421e-9fda-825ac6272af2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Black.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Black.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Black.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Black.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Black.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Bold.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Bold.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Bold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Bold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-ExtraBold.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-ExtraBold.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-ExtraBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-ExtraBold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-ExtraBold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-ExtraLight.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-ExtraLight.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-ExtraLight.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-ExtraLight.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-ExtraLight.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Light.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Light.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Light.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Light.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Medium.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Medium.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Medium.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Medium.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Medium.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Regular.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Regular.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Regular.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Regular.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-SemiBold.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-SemiBold.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-SemiBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-SemiBold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-SemiBold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Thin.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Thin.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Thin.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Thin.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fonts/Nohemi-Thin.woff2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/DataFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/DataFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/event/list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/event/list.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +60,9 @@
       <workItem from="1718179561486" duration="5464000" />
       <workItem from="1718194710144" duration="5176000" />
       <workItem from="1718277731205" duration="17375000" />
-      <workItem from="1718352312588" duration="5275000" />
+      <workItem from="1718352312588" duration="5407000" />
+      <workItem from="1718375666145" duration="1449000" />
+      <workItem from="1718437028791" duration="1126000" />
     </task>
     <servers />
   </component>

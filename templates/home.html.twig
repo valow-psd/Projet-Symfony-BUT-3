@@ -76,7 +76,7 @@
 {#                            <img src="https://via.placeholder.com/50" alt="{{ event.title }}" class="w-12 h-12 mr-4">#}
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900">{{ event.title }}</h3>
-                                <p class="text-gray-500">{{ event.description }}</p>
+                                <p class="text-gray-500">{{ event.description|length > 100 ? event.description[:100] ~ '...' : event.description }}</p>
                             </div>
                         </div>
                         <div class="text-right">
