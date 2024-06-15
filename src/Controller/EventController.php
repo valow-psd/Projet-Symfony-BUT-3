@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\Registration;
 use App\Form\EventType;
+use App\Form\EventFilterType;
 use App\Service\EmailService;
 use App\Service\EventRegistrationService;
 use App\Service\StripeService;
@@ -59,20 +60,46 @@ class EventController extends AbstractController
     }
 
     #[Route('/events', name: 'event_list')]
-    public function list(EntityManagerInterface $entityManager, PaginatorInterface $paginator, Request $request): Response
+    public function list(Request $request, EntityManagerInterface $entityManager, PaginatorInterface $paginator): Response
     {
+        $form = $this->createForm(EventFilterType::class);
+        $form->handleRequest($request);
+
         $queryBuilder = $entityManager->getRepository(Event::class)->createQueryBuilder('e')
             ->where('e.isPublic = true OR (e.isPublic = false AND e.createdBy = :user)')
             ->setParameter('user', $this->getUser());
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $filters = $form->getData();
+
+            if (!empty($filters['title'])) {
+                $queryBuilder->andWhere('e.title LIKE :title')
+                    ->setParameter('title', '%' . $filters['title'] . '%');
+            }
+
+            if (!empty($filters['date'])) {
+                $startDate = (new \DateTime($filters['date']->format('Y-m-d')))->setTime(0, 0, 0);
+                $endDate = (new \DateTime($filters['date']->format('Y-m-d')))->setTime(23, 59, 59);
+                $queryBuilder->andWhere('e.date BETWEEN :startDate AND :endDate')
+                    ->setParameter('startDate', $startDate)
+                    ->setParameter('endDate', $endDate);
+            }
+
+            if (!empty($filters['maxParticipants'])) {
+                $queryBuilder->andWhere('e.maxParticipants = :maxParticipants')
+                    ->setParameter('maxParticipants', $filters['maxParticipants']);
+            }
+        }
+
         $pagination = $paginator->paginate(
-            $queryBuilder, /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            10 /*limit per page*/
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
         );
 
         return $this->render('event/list.html.twig', [
             'pagination' => $pagination,
+            'form' => $form->createView(),
         ]);
     }
 

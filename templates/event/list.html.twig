@@ -10,6 +10,35 @@
             <h2 class="mt-4 text-5xl font-bold text-gray-900">Upcoming Events</h2>
             <p class="mt-2 text-gray-600">Upcoming events schedule not to be missed!</p>
         </div>
+
+        <!-- Filter Form -->
+        <div class="max-w-4xl mx-auto mb-8 p-6 bg-white shadow-lg rounded-lg">
+            {{ form_start(form) }}
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div>
+                    {{ form_label(form.title, 'Event Title') }}
+                    {{ form_widget(form.title, {'attr': {'class': 'block w-full px-3 py-2 border rounded-lg focus:ring focus:border-blue-300'}}) }}
+                </div>
+                <div>
+                    {{ form_label(form.date, 'Event Date') }}
+                    {{ form_widget(form.date, {'attr': {'class': 'block w-full px-3 py-2 border rounded-lg focus:ring focus:border-blue-300'}}) }}
+                </div>
+                <div>
+                    {{ form_label(form.maxParticipants, 'Max Participants') }}
+                    {{ form_widget(form.maxParticipants, {'attr': {'class': 'block w-full px-3 py-2 border rounded-lg focus:ring focus:border-blue-300'}}) }}
+                </div>
+                <div class="flex flex-col space-y-2">
+                    {{ form_label(form.filter, 'Filter') }}
+                    {{ form_widget(form.filter, {'attr': {'class': 'w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'}}) }}
+                    <button type="button" class="w-full text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2" onclick="resetAllFields()">
+                        Reset All
+                    </button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+
+        <!-- Events List -->
         <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center">
             {% for event in pagination %}
                 <div class="w-full max-w-sm mx-auto bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
@@ -45,4 +74,16 @@
             {{ knp_pagination_render(pagination) }}
         </div>
     </div>
+
+    <script>
+        function resetField(fieldId) {
+            document.getElementById(fieldId).value = '';
+        }
+
+        function resetAllFields() {
+            document.querySelectorAll('#event_filter_title, #event_filter_date, #event_filter_maxParticipants').forEach(field => {
+                field.value = '';
+            });
+        }
+    </script>
 {% endblock %}
